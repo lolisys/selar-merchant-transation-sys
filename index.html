@@ -87,7 +87,7 @@
             margin-bottom: 20px;
         }
 
-        /* The Exact Receipt Look */
+        /* Receipt Look */
         .receipt-box {
             border: 1px solid #ddd;
             padding: 20px;
@@ -117,7 +117,7 @@
             background: rgba(255,0,0,0.02);
         }
 
-        /* Payment Form - FIXED FOR BOUNDARIES */
+        /* Payment Form - BUTTON FIT ADJUSTMENTS */
         .payment-card {
             border: 1px solid #eee;
             border-radius: 25px;
@@ -130,28 +130,32 @@
             display: flex; 
             border: 1px solid #ddd;
             border-radius: 12px;
-            overflow: hidden; /* Keeps button inside boundaries */
+            padding: 4px; /* Creates internal spacing so button isn't touching edges */
             margin-bottom: 15px;
+            align-items: center;
         }
         
         input[type="text"] {
             flex: 1;
             border: none;
-            padding: 12px;
+            padding: 8px 12px;
             font-size: 18px;
             color: #333;
             outline: none;
+            background: transparent;
+            min-width: 0; /* Prevents overflow */
         }
 
         .btn-continue {
             background-color: var(--success-green);
             color: white;
             border: none;
-            padding: 0 20px;
+            border-radius: 8px; /* Rounded inside the input box */
+            padding: 10px 20px;
             font-weight: bold;
             font-size: 14px;
             cursor: pointer;
-            transition: opacity 0.2s;
+            white-space: nowrap;
         }
 
         .network-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #666; }
