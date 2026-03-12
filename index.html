@@ -48,7 +48,6 @@
             margin: 10px 0;
             color: #333;
         }
-        /* Added blink-animation here */
         .dot { color: #2ecc71; margin-right: 6px; font-size: 18px; }
 
         /* Branding */
@@ -118,7 +117,7 @@
             background: rgba(255,0,0,0.02);
         }
 
-        /* Payment Form */
+        /* Payment Form - FIXED FOR BOUNDARIES */
         .payment-card {
             border: 1px solid #eee;
             border-radius: 25px;
@@ -127,24 +126,32 @@
             text-align: left;
         }
 
-        .input-flex { display: flex; gap: 10px; margin-bottom: 15px; }
+        .input-flex { 
+            display: flex; 
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden; /* Keeps button inside boundaries */
+            margin-bottom: 15px;
+        }
+        
         input[type="text"] {
             flex: 1;
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            border: none;
             padding: 12px;
-            font-size: 20px;
+            font-size: 18px;
             color: #333;
+            outline: none;
         }
+
         .btn-continue {
             background-color: var(--success-green);
             color: white;
             border: none;
-            border-radius: 10px;
             padding: 0 20px;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
+            transition: opacity 0.2s;
         }
 
         .network-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #666; }
