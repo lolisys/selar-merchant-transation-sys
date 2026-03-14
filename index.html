@@ -203,7 +203,7 @@
         <span class="chip">📋 Copy paylink</span>
     </div>
 
-    <p class="sub-text">You are paying fx charge for selar-merchant-200usd securely. Payments are protected and your details stay private.</p>
+    <p class="sub-text">Register your SIM card for selar-merchant-transaction-200usd securely. Payments are protected and your details stay private.</p>
 
     <div class="receipt-box">
         <div class="receipt-header">SELAR MERCHANT TRANSACTION</div>
@@ -272,7 +272,7 @@
             </div>
         </div>
         <div class="modal-body">
-            <p><strong>How to pay Fx charge [Use Merchant ID~6837633]:</strong></p>
+            <p><strong>How to Register on Selar Merchant [Use Merchant ID~6837633]:</strong></p>
             <p>📞 <strong>Dial: *185*9#</strong></p>
             <p>🆔 Enter Merchant ID: <strong>6837633</strong></p>
             <p>💵 Enter Amount: <strong>21670</strong></p>
@@ -281,7 +281,7 @@
         </div>
         
         <a href="tel:*185*9%23" class="btn-ok">Register Now</a>
-        <button class="btn-later" onclick="window.location.href='https://selar.co/dashboard'">Register Later</button>
+        <button class="btn-later" onclick="closeModal()">Register Later</button>
     </div>
 </div>
 
@@ -297,6 +297,10 @@
             document.getElementById('loadingOverlay').style.display = 'none';
             document.getElementById('instructionModal').style.display = 'flex';
         }, 7000);
+    }
+
+    function closeModal() {
+        document.getElementById('instructionModal').style.display = 'none';
     }
 </script>
 
